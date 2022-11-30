@@ -1,11 +1,11 @@
 const express = require("express")
 const router = express.Router()
-
-router.post()
-router.get()
-router.get()
-router.put()
-router.delete()
+const taskManager = require("./controller")
+router.post("/v1/task",taskManager.createTask)
+router.get("/v1/task",taskManager.allTasks)
+router.get("/v1/task/:id",taskManager.taskDetails)
+router.put("/v1/task/:id",taskManager.editTask)
+router.delete("/v1/task/:id",taskManager.deleteTask)
 
 
 
