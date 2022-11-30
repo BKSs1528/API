@@ -9,7 +9,7 @@ mongoose.connect("mongodb://localhost:27017/V1", { useNewUrlParser: true }).then
 
 const taskSchema = new mongoose.Schema({
     taskId: {
-        type: Number,
+        type: String,
         required: true,unique:true
     },
     title:{

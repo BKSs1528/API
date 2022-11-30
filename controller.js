@@ -66,14 +66,16 @@ exports.editTask = async (req, res) => {
     try {
         const Data = await taskModel.updateOne({ taskId: req.params.id }, {
             $set: {
-                is_completed: new Boolean(req.body.is_completed),
-                title: req.body.title
+                itle: req.query.title,
+                is_completed: new Boolean(req.query.is_completed)
             }
         })
-        if (Data.length) {
-            res.status(200).send({ message: "Data updated sucessfully" })
+        console.log(Data);
+        if (Data.length) {console.log(66);
+            res.status(200).send({ message: "Data updated sucessfully",Data })
         } else {
-            res.status(400).json({ status: "success" }, { message: "Data not available" })
+            console.log(77);
+            res.status(400).send({ status: "success" ,message: `Data not available ${69}` })
         }
     } catch (err) {
         console.log(err);
