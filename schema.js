@@ -10,6 +10,20 @@ mongoose.connect("mongodb://localhost:27017/V1", { useNewUrlParser: true }).then
 const taskSchema = new mongoose.Schema({
     taskId: {
         type: String,
+        required: true,unique:true
+    },
+    title:{
+        type: String,
+        required: true
+    },
+    is_completed:{
+        type: Boolean,
         required: true
     }
 })
+
+
+const taskModel = new mongoose.model("taskAPI",taskSchema)
+
+
+module.exports = taskModel;
