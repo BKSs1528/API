@@ -10,7 +10,7 @@ exports.createTask = async (req, res) => {
         const id = await generateID()
         const taskData = await taskModel.create({
             taskId: id,
-            title: req.body.title,
+            title: req.query.title,
             is_completed: false
         })
         res.status(200).send({ data: taskData })
@@ -24,7 +24,7 @@ exports.allTasks = async (req, res) => {
     try {
         const allData = await taskModel.find({})
         if (allData.length) {
-            res.status(200).send({ data: allData })
+            res.status(200).send({ tasks: [allData] })
         } else {
             res.status(400).json({ status: "success" }, { message: "Data not available" })
         }
@@ -40,7 +40,7 @@ exports.taskDetails = async (req, res) => {
         if (Data.length) {
             res.status(200).send({ data: Data })
         } else {
-            res.status(400).json({ status: "success" }, { message: "Data not available" })
+            res.status(404).json({ status: "success" }, { message: "There is no task at that id" })
         }
     } catch (err) {
         console.log(err);
@@ -50,7 +50,7 @@ exports.taskDetails = async (req, res) => {
 
 exports.deleteTask = async (req, res) => {
     try {
-        const Data = await taskModel.deleteOne({ taskId: req.params.id })
+        const Data = await taskModel.delete({ taskId: req.params.id })
         if (Data.length) {
             res.status(200).send({ message: "Data deleted sucessfully" })
         } else {
@@ -64,10 +64,10 @@ exports.deleteTask = async (req, res) => {
 
 exports.editTask = async (req, res) => {
     try {
-        const Data = await taskModel.updateOne({ taskId: req.params.id },{
-            $set:{
+        const Data = await taskModel.updateOne({ taskId: req.params.id }, {
+            $set: {
                 is_completed: new Boolean(req.body.is_completed),
-                title:req.body.title
+                title: req.body.title
             }
         })
         if (Data.length) {
